@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>AI Study Helper</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>AI Study Helper</h1>
+
+    <input
+        type="text"
+        id="prompt"
+        placeholder="Ask something..."
+    >
+
+    <button onclick="sendPrompt()">
+        Ask AI
+    </button>
+
+    <div id="response"></div>
+
+</div>
+
+<script>
+
+async function sendPrompt() {
+
+    const message =
+        document.getElementById("prompt").value
+
+    const response = await fetch("/ask", {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+            message: message
+        })
+    })
+
+    const data = await response.json()
+
+    document.getElementById("response").innerText =
+        data.reply
+}
+
+</script>
+
+</body>
+</html>
